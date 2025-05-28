@@ -2,5 +2,5 @@ typedef struct Data {
     //will hold the data collected from parsing files
 };
 
-void makenode();
+char* makenode();
 void makeconnection();
