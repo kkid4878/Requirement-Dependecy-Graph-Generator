@@ -11,10 +11,12 @@ int main() {
 
     FILE *file = fopen(filename, "r");
     Requirement reqs[100];
+    
+    
     int count = parse_file(file, reqs, 100);
     fclose(file);
 
-    write_dependency_report_with_header(filename, reqs, count, "report.md");
+    write_dependency_report_with_header(filename, reqs, count, "rdgg-report-76716794.md");
 
     printf("=== Requirements Dependency Report ===\n\n");
     //print_dependency_report(reqs, count);
