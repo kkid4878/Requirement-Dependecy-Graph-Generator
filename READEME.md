@@ -1,6 +1,9 @@
 Modules:
 -file load parse contains the functions needed to open and parse the file we are given
-- data has the functions to properly store the data we are given from parsing the file
-- graph has the functions to build the graph from our data
+-trim and split_csv are helper files for parse_file, which does the bulk of the parsing.
+-load_file takes a filepath and loads the file
 
-The project does not currently have any implemented code, so upon being built and ran the program does nothing
+- data has the functions to properly store the data we are given from parsing the file
+- also contains the structure which is used to store data, called Requirement
+
+-previous iterations of this program included graph and graph.h, which were designed to draw the diagram of the dependency tree, which is no longer required
