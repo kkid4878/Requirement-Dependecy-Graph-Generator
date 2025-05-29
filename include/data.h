@@ -6,6 +6,7 @@
 #define MAX_PARENTS 10
 #define MAX_CHILDREN 10
 
+
 typedef struct {
     char id[MAX_ID_LEN];
     char description[MAX_DESC_LEN];
@@ -13,15 +14,13 @@ typedef struct {
     int parent_count;
     char children[MAX_CHILDREN][MAX_ID_LEN];
     int child_count;
-    int line_number; // <-- Add this
+    int line_number;
 } Requirement;
 
+/*
 Requirement makenode(const Requirement* src);
 int add_requirement(Requirement* arr, int count, int max, const Requirement* req);
 void print_requirement(const Requirement* req);
-
-
-//char* makenode();
-//void makeconnection();
+*/
 
 #endif

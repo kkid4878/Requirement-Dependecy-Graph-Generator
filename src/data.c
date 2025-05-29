@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "data.h"
 
+/*
 // Example: create a new Requirement node (deep copy)
 Requirement makenode(const Requirement* src) {
     Requirement node;
@@ -30,4 +31,4 @@ void print_requirement(const Requirement* req) {
     for (int i = 0; i < req->child_count; ++i)
         printf("%s ", req->children[i]);
     printf("\n");
-}
+}*/
