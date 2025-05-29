@@ -126,20 +126,30 @@ void write_dependency_report_with_header(const char *input_filename, const Requi
     }
     fputs("\n", out);
 
-    int line = 4; // Start line numbering after the header
+    int line = 23; // Start line numbering after the header
     for (int i = 0; i < count; ++i) {
         fprintf(out, "Line %d: %s --\n", line++, reqs[i].id);
 
-        for (int j = 0; j < reqs[i].parent_count; ++j) {
+        for (int j = 0; j < reqs[i].parent_count; ++j) 
+        {
+            if(j==0) {
+                line+=2; // Increment line only once for parents
+            }
             if (strcmp(reqs[i].parents[j], "--") != 0 && strlen(reqs[i].parents[j]) > 0) {
-                fprintf(out, "Line %d: %s -> %s\n", line++, reqs[i].parents[j], reqs[i].id);
+                fprintf(out, "Line %d: %s -> %s\n", line, reqs[i].parents[j], reqs[i].id);
             }
         }
-        for (int j = 0; j < reqs[i].child_count; ++j) {
+        for (int j = 0; j < reqs[i].child_count; ++j) 
+        {
+            if(j==0){
+                line+=1; // Increment line only once for children
+                } 
             if (strcmp(reqs[i].children[j], "--") != 0 && strlen(reqs[i].children[j]) > 0) {
-                fprintf(out, "Line %d: %s -> %s\n", line++, reqs[i].id, reqs[i].children[j]);
+                fprintf(out, "Line %d: %s -> %s\n", line, reqs[i].id, reqs[i].children[j]);
             }
         }
+
+        line+=4; // Skip 4 lines for each requirement
     }
 
     fclose(in);
