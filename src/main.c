@@ -10,21 +10,18 @@ int main() {
     filename[strcspn(filename, "\n")] = 0; // Remove newline
 
     FILE *file = fopen(filename, "r");
-    if (!file) {
-        printf("Could not open file: %s\n", filename);
-        return 1;
-    }
-
     Requirement reqs[100];
     int count = parse_file(file, reqs, 100);
     fclose(file);
+
+    write_dependency_report_with_header(filename, reqs, count, "report.md");
 
     printf("=== Requirements Dependency Report ===\n\n");
     //print_dependency_report(reqs, count);
 
     //write_dependency_report_with_header(filename, reqs, count, "report.md");
 
-    print_requirement(reqs);
+    //print_requirement(reqs);
 
     /*
     printf("Parsed %d requirements:\n", count);

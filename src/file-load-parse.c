@@ -63,10 +63,7 @@ void load_file(char* filename)
 
 int parse_file(FILE *file, Requirement *reqs, int max_reqs)
 {
-    //reads loaded file
-    //sends relevant data to database
-    //every time it hits relevant data, calls make node from data
-     char line[MAX_LINE];
+    char line[MAX_LINE];
     int in_yaml = 0, req_count = 0;
     Requirement current;
 
@@ -86,48 +83,30 @@ int parse_file(FILE *file, Requirement *reqs, int max_reqs)
             continue;
         }
         if (in_yaml) {
-            char *p;
-            if ((p = strstr(line, "ID:")) == line) {
-                sscanf(line, "ID: %s", current.id);
-            } else if ((p = strstr(line, "Description:")) == line) {
-                char *desc = line + strlen("Description:");
+            if (strlen(line) == 0) continue;
+            char *p = line;
+            while (*p == ' ' || *p == '\t') ++p;
+
+            if (strncmp(p, "ID:", 3) == 0) {
+                sscanf(p, "ID: %s", current.id);
+            } else if (strncmp(p, "Description:", 12) == 0) {
+                char *desc = p + 12;
                 trim(desc);
                 strncpy(current.description, desc, MAX_DESC_LEN-1);
-            } else if ((p = strstr(line, "Parents:")) == line) {
-                char *parents = line + strlen("Parents:");
+            } else if (strncmp(p, "Parents:", 8) == 0) {
+                char *parents = p + 8;
                 trim(parents);
                 current.parent_count = split_csv(parents, current.parents, MAX_PARENTS);
-            } else if ((p = strstr(line, "Children:")) == line) {
-                char *children = line + strlen("Children:");
+            } else if (strncmp(p, "Children:", 9) == 0) {
+                char *children = p + 9;
                 trim(children);
                 current.child_count = split_csv(children, current.children, MAX_CHILDREN);
             }
         }
     }
     return req_count;
-};
-/*
-void print_dependency_report(const Requirement *reqs, int count) {
-    for (int i = 0; i < count; ++i) {
-        // Print the requirement itself
-        printf("%s --\n", reqs[i].id);
-
-        // Print parent relationships (parent -> this)
-        for (int j = 0; j < reqs[i].parent_count; ++j) {
-            if (strcmp(reqs[i].parents[j], "--") != 0 && strlen(reqs[i].parents[j]) > 0) {
-                printf("%s -> %s\n", reqs[i].parents[j], reqs[i].id);
-            }
-        }
-
-        // Print child relationships (this -> child)
-        for (int j = 0; j < reqs[i].child_count; ++j) {
-            if (strcmp(reqs[i].children[j], "--") != 0 && strlen(reqs[i].children[j]) > 0) {
-                printf("%s -> %s\n", reqs[i].id, reqs[i].children[j]);
-            }
-        }
-    }
 }
-*/
+
 void write_dependency_report_with_header(const char *input_filename, const Requirement *reqs, int count, const char *outfilename) {
     FILE *in = fopen(input_filename, "r");
     FILE *out = fopen(outfilename, "w");

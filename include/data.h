@@ -13,6 +13,7 @@ typedef struct {
     int parent_count;
     char children[MAX_CHILDREN][MAX_ID_LEN];
     int child_count;
+    int line_number; // <-- Add this
 } Requirement;
 
 Requirement makenode(const Requirement* src);
